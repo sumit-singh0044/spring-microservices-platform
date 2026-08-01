@@ -30,7 +30,7 @@ public class Users {
     String password;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference
     private List<Address> addresses = new ArrayList<>();
 
     public Long getId() {

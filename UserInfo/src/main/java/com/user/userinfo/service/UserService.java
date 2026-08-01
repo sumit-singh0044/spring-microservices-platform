@@ -47,6 +47,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public List<Users> getUsersAddress() {
+        return userRepository.findAllAddress();
+    }
+
 
 //    <!--        tejas loan - 9582668554 - 366, 16B vasundra , gajiabad UP , 20012 -->
 }

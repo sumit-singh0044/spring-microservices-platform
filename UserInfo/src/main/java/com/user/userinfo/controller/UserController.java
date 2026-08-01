@@ -1,6 +1,8 @@
 package com.user.userinfo.controller;
 
 
+
+
 import com.user.userinfo.entity.Users;
 import com.user.userinfo.service.UserService;
 import org.apache.catalina.User;
@@ -35,6 +37,13 @@ public class UserController {
         }
 
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/address")
+    public ResponseEntity<List<Users>> getUsersAdress() {
+
+        return ResponseEntity.ok(userService.getUsersAddress());
+
     }
 
 //    @PostMapping

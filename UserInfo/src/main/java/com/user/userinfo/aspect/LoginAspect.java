@@ -22,6 +22,17 @@ public class LoginAspect {
         log.info("Before method: " + joinPoint.getSignature().getName());
     }
 
+
+    @Before(
+            "execution(* com.user.userinfo.controller.UserController.getUsers(..)) || " +
+                    "execution(* com.user.userinfo.controller.UserController.getUsersAdress(..))"
+    )
+    public void beforeGetRequest(JoinPoint joinPoint) {
+        System.out.println("Before get request");
+        log.info("Before get request");
+    }
+    
+
     @After("execution(* com.user.userinfo.service.UserService.saveUser(..))")
     public void after(JoinPoint joinPoint) {
         System.out.println("After method completed: " + joinPoint.getSignature().getName() + " Exception");
