@@ -39,6 +39,13 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/address")
+    public ResponseEntity<List<Users>> getUsersAdress() {
+
+        return ResponseEntity.ok(userService.getUsersAddress());
+
+    }
+
 //    @PostMapping
 //    public ResponseEntity<Void> saveUser(@RequestBody Users user) {
 //        Users savedUser = userService.saveUser(user);

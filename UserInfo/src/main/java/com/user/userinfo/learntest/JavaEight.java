@@ -45,6 +45,13 @@ public class JavaEight {
                 .orElseThrow( () -> new IllegalStateException("Not found"));
 
         System.out.println("Second non-repeating character is: " + ans4);
+
+        LinkedHashMap<Character, Long> map = str.chars().mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(e-> e, LinkedHashMap::new , Collectors.counting()));
+
+        for(Character ch : map.keySet()){
+            System.out.println(ch + " : " + map.get(ch));
+        }
     }
 
 }
