@@ -37,4 +37,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleUserNotFound(UsernameNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid email or password"));
     }
+
+    @ExceptionHandler(PaymentServiceException.class)
+    public ResponseEntity<String> handlePaymentException(PaymentServiceException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(ex.getMessage());
+    }
 }

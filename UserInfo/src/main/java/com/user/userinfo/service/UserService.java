@@ -4,7 +4,9 @@ import com.user.userinfo.client.PaymentClient;
 import com.user.userinfo.dto.AccountRequest;
 import com.user.userinfo.dto.AccountResponse;
 import com.user.userinfo.entity.Users;
+import com.user.userinfo.exception.PaymentServiceException;
 import com.user.userinfo.repository.UserRepository;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +49,12 @@ public class UserService {
         request.setId(savedUsers.getId());
         request.setEmail(savedUsers.getEmail());
 
-        paymentClient.createAccount(request);
+        try {
+            paymentClient.createAccount(request);
+        } catch (FeignException ex) {
+            userRepository.delete(savedUsers); // optional compensation
+            throw new PaymentServiceException("Failed to create bank account");
+        }
         return savedUsers;
 
     }

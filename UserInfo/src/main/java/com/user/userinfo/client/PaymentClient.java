@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PaymentClient {
 
     @PostMapping("/accounts")
-    ResponseEntity<String> createAccount(@RequestBody AccountRequest request);
+    void createAccount(@RequestBody AccountRequest request);
 
 }
