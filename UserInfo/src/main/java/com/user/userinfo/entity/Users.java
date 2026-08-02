@@ -29,6 +29,7 @@ public class Users {
     @NotNull
     String password;
 
+
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses = new ArrayList<>();

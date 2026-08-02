@@ -1,7 +1,11 @@
 package com.user.userinfo.service;
 
+import com.user.userinfo.client.PaymentClient;
+import com.user.userinfo.dto.AccountRequest;
+import com.user.userinfo.dto.AccountResponse;
 import com.user.userinfo.entity.Users;
 import com.user.userinfo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,9 @@ public class UserService {
 
     public UserRepository userRepository;
     public final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PaymentClient paymentClient;
 
     public UserService(UserRepository userRepository ,  PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -32,9 +39,17 @@ public class UserService {
         if (optionalUser.isPresent()) {
             return null;
         }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Users savedUsers= userRepository.save(user);
+
+        AccountRequest request = new AccountRequest();
+        request.setId(savedUsers.getId());
+        request.setEmail(savedUsers.getEmail());
+
+        paymentClient.createAccount(request);
         return savedUsers;
+
     }
 
     public Users getUserById(Long id) {
