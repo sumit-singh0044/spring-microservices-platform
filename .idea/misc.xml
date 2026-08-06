@@ -7,6 +7,9 @@
         <option value="$PROJECT_DIR$/UserInfo/pom.xml" />
         <option value="$PROJECT_DIR$/UserKafka/pom.xml" />
         <option value="$PROJECT_DIR$/UserPayment/pom.xml" />
+        <option value="$PROJECT_DIR$/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/notification-service/pom.xml" />
       </list>
     </option>
   </component>
