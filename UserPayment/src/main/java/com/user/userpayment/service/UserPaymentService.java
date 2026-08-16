@@ -3,7 +3,10 @@ package com.user.userpayment.service;
 import com.user.userpayment.repository.UserPaymentRepository;
 import com.user.userpayment.dto.AccountRequest;
 import com.user.userpayment.entity.Account;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserPaymentService {
@@ -27,5 +30,9 @@ public class UserPaymentService {
 
         Account acc =  userPaymentRepository.save(account);
         return acc;
+    }
+
+    public List<Account> getAllAccount() {
+        return userPaymentRepository.findAll();
     }
 }

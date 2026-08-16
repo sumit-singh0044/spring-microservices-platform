@@ -3,8 +3,10 @@ package com.user.userinfo.service;
 import com.user.userinfo.client.PaymentClient;
 import com.user.userinfo.dto.AccountRequest;
 import com.user.userinfo.dto.AccountResponse;
+import com.user.userinfo.dto.UserCreatedEvent;
 import com.user.userinfo.entity.Users;
 import com.user.userinfo.exception.PaymentServiceException;
+import com.user.userinfo.kafka.UserProducer;
 import com.user.userinfo.repository.UserRepository;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,15 @@ public class UserService {
 
     public UserRepository userRepository;
     public final PasswordEncoder passwordEncoder;
+    private final UserProducer userProducer;
 
     @Autowired
     private PaymentClient paymentClient;
 
-    public UserService(UserRepository userRepository ,  PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository ,  PasswordEncoder passwordEncoder , UserProducer userProducer) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userProducer = userProducer;
     }
 
 
@@ -55,6 +59,15 @@ public class UserService {
             userRepository.delete(savedUsers); // optional compensation
             throw new PaymentServiceException("Failed to create bank account");
         }
+
+        UserCreatedEvent event = new UserCreatedEvent(
+                savedUsers.getId(),
+                savedUsers.getName(),
+                savedUsers.getEmail()
+        );
+
+        userProducer.sendMessage(event);
+
         return savedUsers;
 
     }
@@ -74,7 +87,7 @@ public class UserService {
     }
 
 
-//    <!--        tejas loan - 9582668554 - 366, 16B vasundra , gajiabad UP , 20012 -->
+
 }
 
 
