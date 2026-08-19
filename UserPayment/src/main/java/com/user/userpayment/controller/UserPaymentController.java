@@ -44,4 +44,11 @@ public class UserPaymentController {
 
         return ResponseEntity.ok(userPaymentService.getAllAccount());
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long userId) {
+        userPaymentService.deleteAccount(userId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -93,3 +93,174 @@ Future pulls only require:
 ```bash
 git pull
 ```
+
+
+
+# Redis
+
+Redis is an **in-memory key-value data store**.
+
+It is commonly used for:
+
+* Caching
+* Rate limiting
+* Session storage
+* Counters
+* Temporary data
+* Distributed locking
+
+## Running Redis with Docker
+
+Make sure Docker Desktop is running.
+
+Start Redis:
+
+```bash
+docker run --name redis -p 6379:6379 -d redis
+```
+
+Check if Redis is running:
+
+```bash
+docker ps
+```
+
+Redis will be available on:
+
+```text
+localhost:6379
+```
+
+Open Redis CLI:
+
+```bash
+docker exec -it redis redis-cli
+```
+## Basic Commands
+
+### SET
+
+Store data:
+
+```text
+SET name Sumit
+```
+
+### GET
+
+Retrieve data:
+
+```text
+GET name
+```
+
+Output:
+
+```text
+"Sumit"
+```
+
+### DEL
+
+Delete data:
+
+```text
+DEL name
+```
+
+### KEYS
+
+See stored keys:
+
+```text
+KEYS *
+```
+
+> **Note:** `KEYS *` is useful for learning, but should be avoided in production with large datasets.
+
+## Expiration
+
+### EXPIRE
+
+Set expiration time in seconds:
+
+```text
+SET name Sumit
+EXPIRE name 30
+```
+
+The key will automatically be deleted after 30 seconds.
+
+You can also set expiration while creating the key:
+
+```text
+SET name Sumit EX 30
+```
+
+### TTL
+
+Check the remaining expiration time:
+
+```text
+TTL name
+```
+
+Example:
+
+```text
+(integer) 25
+```
+
+This means approximately **25 seconds** are remaining.
+
+## Counters
+
+### INCR
+
+Increase a number by 1:
+
+```text
+SET counter 10
+INCR counter
+```
+
+Output:
+
+```text
+(integer) 11
+```
+
+If the key doesn't exist, Redis creates it:
+
+```text
+INCR counter
+```
+
+Result:
+
+```text
+(integer) 1
+```
+
+### DECR
+
+Decrease a number by 1:
+
+```text
+DECR counter
+```
+
+## Basic Commands to Remember
+
+| Command  | Purpose                    |
+| -------- | -------------------------- |
+| `SET`    | Store data                 |
+| `GET`    | Retrieve data              |
+| `DEL`    | Delete data                |
+| `KEYS *` | View keys                  |
+| `EXPIRE` | Set expiration             |
+| `TTL`    | Check remaining expiration |
+| `INCR`   | Increase a number          |
+| `DECR`   | Decrease a number          |
+
+

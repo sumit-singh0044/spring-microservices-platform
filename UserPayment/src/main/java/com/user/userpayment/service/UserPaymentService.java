@@ -3,6 +3,7 @@ package com.user.userpayment.service;
 import com.user.userpayment.repository.UserPaymentRepository;
 import com.user.userpayment.dto.AccountRequest;
 import com.user.userpayment.entity.Account;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class UserPaymentService {
 
     public List<Account> getAllAccount() {
         return userPaymentRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteAccount(Long userId) {
+        userPaymentRepository.deleteByUserID(userId);
     }
 }

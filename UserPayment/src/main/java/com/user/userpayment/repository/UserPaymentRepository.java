@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserPaymentRepository extends JpaRepository<Account, Long> {
 
+    void deleteByUserID(Long userID);
+
 }

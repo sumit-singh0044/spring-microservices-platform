@@ -10,7 +10,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    private long userID;
+    private Long userID;
     private String AccountNumber;
 
     public Long getId() {
