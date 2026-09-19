@@ -1,9 +1,8 @@
 package com.user.userinfo.learntest;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import org.hibernate.id.IntegralDataTypeHolder;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class JavaEight {
@@ -22,47 +21,48 @@ public class JavaEight {
         Character ans2 = str.chars().mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()))
                 .entrySet().stream()
-                        .filter(e -> e.getKey() != null && e.getValue() > 1)
-                                .map(Map.Entry::getKey)
-                                        .skip(1).findFirst().orElse(null);
+                .filter(e -> e.getKey() != null && e.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .skip(1).findFirst().orElse(null);
 
         System.out.println("Second repeating character is: " + ans2);
 
-        Character ans3= str.chars().mapToObj(c -> (char)c)
+        Character ans3 = str.chars().mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()))
                 .entrySet().stream().
-                filter(e-> e.getKey()!=null && e.getValue()==1)
+                filter(e -> e.getKey() != null && e.getValue() == 1)
                 .map(Map.Entry::getKey)
                 .findFirst().orElse(null);
 
         System.out.println("First non-repeating character is: " + ans3);
 
-        Character ans4= str.chars().mapToObj(c->(char)c)
-                .collect(Collectors.groupingBy(e-> e, LinkedHashMap::new , Collectors.counting()))
+        Character ans4 = str.chars().mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(e -> e, LinkedHashMap::new, Collectors.counting()))
                 .entrySet().stream()
-                .filter(e-> e.getValue()==1)
+                .filter(e -> e.getValue() == 1)
                 .skip(1)
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .orElseThrow( () -> new IllegalStateException("Not found"));
+                .orElseThrow(() -> new IllegalStateException("Not found"));
 
         System.out.println("Second non-repeating character is: " + ans4);
 
         LinkedHashMap<Character, Long> map = str.chars().mapToObj(c -> (char) c)
-                .collect(Collectors.groupingBy(e-> e, LinkedHashMap::new , Collectors.counting()));
+                .collect(Collectors.groupingBy(e -> e, LinkedHashMap::new, Collectors.counting()));
 
-        for(Character ch : map.keySet()){
+        for (Character ch : map.keySet()) {
             System.out.println(ch + " : " + map.get(ch));
         }
 
 
         System.out.println("===========================================================================");
         List<Employee> employees = Arrays.asList(
-                new Employee(1, "Amit", 50000),
-                new Employee(2, "Rahul", 80000),
-                new Employee(3, "Priya", 70000),
-                new Employee(4, "Neha", 90000),
-                new Employee(5, "Raj", 60000)
+                new Employee(1, "John", 50000, "Engineering"),
+                new Employee(2, "Alice", 60000, "Marketing"),
+                new Employee(3, "Bob", 55000, "Sales"),
+                new Employee(4, "John", 50000, "Engineering"),
+                new Employee(5, "Alice", 60000, "Marketing"),
+                new Employee(3, "Bob", 55000, "Sales")
         );
 
         // Find the employee with the highest salary
@@ -76,6 +76,11 @@ public class JavaEight {
                 .sorted((e2, e3) -> Double.compare(e2.getSalary(), e3.getSalary()))
                 .skip(2).findFirst().orElse(null);
         System.out.println("Employee with the third highest salary: " + e1);
-    }
+
+
+    List<Integer> li = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    li.stream().filter(e ->e %2==0).forEach(System.out::print);
+
+}
 
 }

@@ -73,4 +73,15 @@ public class Users {
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
+
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
 }

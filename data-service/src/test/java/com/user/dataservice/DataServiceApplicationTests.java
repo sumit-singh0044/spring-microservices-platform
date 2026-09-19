@@ -1,10 +1,10 @@
-package com.user.userpayment;
+package com.user.dataservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserPaymentApplicationTests {
+class DataServiceApplicationTests {
 
     @Test
     void contextLoads() {
