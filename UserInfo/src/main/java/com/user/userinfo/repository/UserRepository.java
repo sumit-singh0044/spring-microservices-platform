@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
         LEFT JOIN FETCH u.addresses
         """)
     List<Users> findAllAddress();
+
+    List<Users> findByNameStartingWith(String prefix);
 }
