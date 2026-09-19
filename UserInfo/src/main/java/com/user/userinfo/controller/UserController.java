@@ -1,11 +1,7 @@
 package com.user.userinfo.controller;
 
-
-
-
 import com.user.userinfo.entity.Users;
 import com.user.userinfo.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +12,7 @@ import java.util.List;
 @RequestMapping("api/users")
 public class UserController {
 
-    public UserService userService;
-
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -30,48 +25,33 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Users> getUserById(@PathVariable Long id) {
-        Users user=userService.getUserById(id);
-
-        if(user==null){
+        Users user = userService.getUserById(id);
+        if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/address")
     public ResponseEntity<List<Users>> getUsersAdress() {
-
         return ResponseEntity.ok(userService.getUsersAddress());
-
     }
-
-//    @PostMapping
-//    public ResponseEntity<Void> saveUser(@RequestBody Users user) {
-//        Users savedUser = userService.saveUser(user);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
 
     @PostMapping
     public ResponseEntity<Users> saveUser(@RequestBody Users user) {
         Users savedUser = userService.saveUser(user);
-
-        if(savedUser==null){
+        if (savedUser == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Users> deleteUser(@PathVariable Long id) {
-        Users user=userService.getUserById(id);
-        if(user==null){
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        boolean deleted = userService.deleteById(id);
+        if (!deleted) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userService.deleteById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok("User, address(es), and account deleted successfully");
     }
-
 }
